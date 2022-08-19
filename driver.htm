@@ -1,0 +1,75 @@
+
+<fieldset id="sys_set">
+	<legend>网关配置</legend>
+	<table id="sys_table" name="station_table" style="background-color:#eeeeee;" bordercolor="#aaaaaa" border="1" cellpadding="0" cellpadding="2" width="100%">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>父id</th>
+				<th>命令</th>
+				<th>数据处理方式</th>
+			</tr>
+		</thead>
+		<tbody contenteditable='true'>
+			<tr>
+
+
+				<td>1</td><td>1</td><td>ls</td><td>ls</td>
+			</tr>
+		</tbody>
+	</table>
+	<input id="add" type="button" onClick="addRow();" style="font-size:16px;" value="新增(+)"/>
+	<input type="button" name="Submit22" value="重置" onclick="window.location.reload()" />
+
+</fieldset>
+<script LANGUAGE="JAVASCRIPT">
+save.onclick = function(){
+	var table = document.getElementById('station_table');
+	var myform = document.getElementById('form1');
+	var contractAll = [];
+	var rows=table.rows;
+	for(var i=0;i<rows.length;i++){
+		var contractList = [];
+		var cells=rows[i].cells;
+		for(var j=0;j<cells.length;j++){   //--循环所有的列
+			contractList.push(cells[j].innerHTML);
+		}
+		contractAll.push(contractList);
+	}
+	alert(JSON.stringify(contractAll));
+	document.getElementById('JSONText').value = JSON.stringify(contractAll);
+	var sys_table = document.getElementById('sys_table');
+	var contract_sys = [];
+	var rows=sys_table.rows;
+	for(var i=0;i<rows.length;i++){
+		var sysList = [];
+		var cells=rows[i].cells;
+		for(var j=0;j<cells.length;j++){   //--循环所有的列
+			sysList.push(cells[j].innerHTML);
+		}
+		contract_sys.push(sysList);
+	}
+	alert(JSON.stringify(contract_sys));
+	document.getElementById('sys_input').value = JSON.stringify(contract_sys);
+	myform.submit();
+}
+iIndex = 0; //试验一下加了int类型定义后如何？？？
+var i= 1;
+function getIndex(){
+	iIndex = event.srcElement.parentElement.parentElement.rowIndex;
+	return iIndex;
+}
+function delRow(iPos){
+	document.all.sys_table.deleteRow(iPos);
+	i--;
+}
+function addRow(iPos){
+	var otr=sys_table.insertRow(i + 1);
+	var ocell=otr.insertCell(0);
+	ocell.innerHTML=""+i+"";
+	var ocell=otr.insertCell(1);
+	ocell.innerHTML="<input type=button onclick=delRow(getIndex()) value='删除"+i+"'>";
+	i++;
+}
+
+</SCRIPT>
